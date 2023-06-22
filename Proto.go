@@ -26,16 +26,16 @@ func (rcv *Proto) Table() flatbuffers.Table {
 	return rcv._tab
 }
 
-func (rcv *Proto) Ft() Ftype {
+func (rcv *Proto) Ft() int16 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(4))
 	if o != 0 {
-		return Ftype(rcv._tab.GetInt16(o + rcv._tab.Pos))
+		return rcv._tab.GetInt16(o + rcv._tab.Pos)
 	}
 	return 0
 }
 
-func (rcv *Proto) MutateFt(n Ftype) bool {
-	return rcv._tab.MutateInt16Slot(4, int16(n))
+func (rcv *Proto) MutateFt(n int16) bool {
+	return rcv._tab.MutateInt16Slot(4, n)
 }
 
 func (rcv *Proto) Uidx() uint64 {
@@ -79,8 +79,8 @@ func (rcv *Proto) User(obj *Uinfo) *Uinfo {
 func ProtoStart(builder *flatbuffers.Builder) {
 	builder.StartObject(4)
 }
-func ProtoAddFt(builder *flatbuffers.Builder, Ft Ftype) {
-	builder.PrependInt16Slot(0, int16(Ft), 0)
+func ProtoAddFt(builder *flatbuffers.Builder, Ft int16) {
+	builder.PrependInt16Slot(0, Ft, 0)
 }
 func ProtoAddUidx(builder *flatbuffers.Builder, uidx uint64) {
 	builder.PrependUint64Slot(1, uidx, 0)
