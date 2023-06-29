@@ -19,31 +19,31 @@ func (rcv *Vec3) Table() flatbuffers.Table {
 	return rcv._tab.Table
 }
 
-func (rcv *Vec3) X() float32 {
-	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(0))
+func (rcv *Vec3) X() float64 {
+	return rcv._tab.GetFloat64(rcv._tab.Pos + flatbuffers.UOffsetT(0))
 }
-func (rcv *Vec3) MutateX(n float32) bool {
-	return rcv._tab.MutateFloat32(rcv._tab.Pos+flatbuffers.UOffsetT(0), n)
-}
-
-func (rcv *Vec3) Y() float32 {
-	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(4))
-}
-func (rcv *Vec3) MutateY(n float32) bool {
-	return rcv._tab.MutateFloat32(rcv._tab.Pos+flatbuffers.UOffsetT(4), n)
+func (rcv *Vec3) MutateX(n float64) bool {
+	return rcv._tab.MutateFloat64(rcv._tab.Pos+flatbuffers.UOffsetT(0), n)
 }
 
-func (rcv *Vec3) Z() float32 {
-	return rcv._tab.GetFloat32(rcv._tab.Pos + flatbuffers.UOffsetT(8))
+func (rcv *Vec3) Y() float64 {
+	return rcv._tab.GetFloat64(rcv._tab.Pos + flatbuffers.UOffsetT(8))
 }
-func (rcv *Vec3) MutateZ(n float32) bool {
-	return rcv._tab.MutateFloat32(rcv._tab.Pos+flatbuffers.UOffsetT(8), n)
+func (rcv *Vec3) MutateY(n float64) bool {
+	return rcv._tab.MutateFloat64(rcv._tab.Pos+flatbuffers.UOffsetT(8), n)
 }
 
-func CreateVec3(builder *flatbuffers.Builder, x float32, y float32, z float32) flatbuffers.UOffsetT {
-	builder.Prep(4, 12)
-	builder.PrependFloat32(z)
-	builder.PrependFloat32(y)
-	builder.PrependFloat32(x)
+func (rcv *Vec3) Z() float64 {
+	return rcv._tab.GetFloat64(rcv._tab.Pos + flatbuffers.UOffsetT(16))
+}
+func (rcv *Vec3) MutateZ(n float64) bool {
+	return rcv._tab.MutateFloat64(rcv._tab.Pos+flatbuffers.UOffsetT(16), n)
+}
+
+func CreateVec3(builder *flatbuffers.Builder, x float64, y float64, z float64) flatbuffers.UOffsetT {
+	builder.Prep(8, 24)
+	builder.PrependFloat64(z)
+	builder.PrependFloat64(y)
+	builder.PrependFloat64(x)
 	return builder.Offset()
 }
