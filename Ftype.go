@@ -9,19 +9,25 @@ type Ftype int16
 const (
 	FtypeMove   Ftype = 0
 	FtypeLogin  Ftype = 1
-	FtypeAction Ftype = 2
+	FtypeEnter  Ftype = 2
+	FtypeAction Ftype = 3
+	FtypeOther  Ftype = 4
 )
 
 var EnumNamesFtype = map[Ftype]string{
 	FtypeMove:   "Move",
 	FtypeLogin:  "Login",
+	FtypeEnter:  "Enter",
 	FtypeAction: "Action",
+	FtypeOther:  "Other",
 }
 
 var EnumValuesFtype = map[string]Ftype{
 	"Move":   FtypeMove,
 	"Login":  FtypeLogin,
+	"Enter":  FtypeEnter,
 	"Action": FtypeAction,
+	"Other":  FtypeOther,
 }
 
 func (v Ftype) String() string {

@@ -71,8 +71,28 @@ func (rcv *Proto) Pos(obj *Vec3) *Vec3 {
 	return nil
 }
 
-func (rcv *Proto) User(obj *Uinfo) *Uinfo {
+func (rcv *Proto) OTherUser(obj *SUser, j int) bool {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(12))
+	if o != 0 {
+		x := rcv._tab.Vector(o)
+		x += flatbuffers.UOffsetT(j) * 4
+		x = rcv._tab.Indirect(x)
+		obj.Init(rcv._tab.Bytes, x)
+		return true
+	}
+	return false
+}
+
+func (rcv *Proto) OTherUserLength() int {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(12))
+	if o != 0 {
+		return rcv._tab.VectorLen(o)
+	}
+	return 0
+}
+
+func (rcv *Proto) User(obj *Uinfo) *Uinfo {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(14))
 	if o != 0 {
 		x := rcv._tab.Indirect(o + rcv._tab.Pos)
 		if obj == nil {
@@ -85,7 +105,7 @@ func (rcv *Proto) User(obj *Uinfo) *Uinfo {
 }
 
 func ProtoStart(builder *flatbuffers.Builder) {
-	builder.StartObject(5)
+	builder.StartObject(6)
 }
 func ProtoAddTt(builder *flatbuffers.Builder, tt flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(0, flatbuffers.UOffsetT(tt), 0)
@@ -99,8 +119,14 @@ func ProtoAddUidx(builder *flatbuffers.Builder, uidx uint64) {
 func ProtoAddPos(builder *flatbuffers.Builder, pos flatbuffers.UOffsetT) {
 	builder.PrependStructSlot(3, flatbuffers.UOffsetT(pos), 0)
 }
+func ProtoAddOTherUser(builder *flatbuffers.Builder, oTherUser flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(4, flatbuffers.UOffsetT(oTherUser), 0)
+}
+func ProtoStartOTherUserVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
+	return builder.StartVector(4, numElems, 4)
+}
 func ProtoAddUser(builder *flatbuffers.Builder, user flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(4, flatbuffers.UOffsetT(user), 0)
+	builder.PrependUOffsetTSlot(5, flatbuffers.UOffsetT(user), 0)
 }
 func ProtoEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	return builder.EndObject()
