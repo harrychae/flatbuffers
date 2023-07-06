@@ -40,8 +40,16 @@ func (rcv *Vec3) MutateZ(n float64) bool {
 	return rcv._tab.MutateFloat64(rcv._tab.Pos+flatbuffers.UOffsetT(16), n)
 }
 
-func CreateVec3(builder *flatbuffers.Builder, x float64, y float64, z float64) flatbuffers.UOffsetT {
-	builder.Prep(8, 24)
+func (rcv *Vec3) AngleZ() float64 {
+	return rcv._tab.GetFloat64(rcv._tab.Pos + flatbuffers.UOffsetT(24))
+}
+func (rcv *Vec3) MutateAngleZ(n float64) bool {
+	return rcv._tab.MutateFloat64(rcv._tab.Pos+flatbuffers.UOffsetT(24), n)
+}
+
+func CreateVec3(builder *flatbuffers.Builder, x float64, y float64, z float64, angleZ float64) flatbuffers.UOffsetT {
+	builder.Prep(8, 32)
+	builder.PrependFloat64(angleZ)
 	builder.PrependFloat64(z)
 	builder.PrependFloat64(y)
 	builder.PrependFloat64(x)

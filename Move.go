@@ -27,9 +27,10 @@ func (rcv *Move) Pos(obj *Vec3) *Vec3 {
 	return obj
 }
 
-func CreateMove(builder *flatbuffers.Builder, pos_x float64, pos_y float64, pos_z float64) flatbuffers.UOffsetT {
-	builder.Prep(8, 24)
-	builder.Prep(8, 24)
+func CreateMove(builder *flatbuffers.Builder, pos_x float64, pos_y float64, pos_z float64, pos_angleZ float64) flatbuffers.UOffsetT {
+	builder.Prep(8, 32)
+	builder.Prep(8, 32)
+	builder.PrependFloat64(pos_angleZ)
 	builder.PrependFloat64(pos_z)
 	builder.PrependFloat64(pos_y)
 	builder.PrependFloat64(pos_x)
