@@ -38,29 +38,82 @@ func (rcv *SUser) MutateUidx(n uint64) bool {
 	return rcv._tab.MutateUint64Slot(4, n)
 }
 
-func (rcv *SUser) Uid() []byte {
+func (rcv *SUser) Uid(j int) int8 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
-		return rcv._tab.ByteVector(o + rcv._tab.Pos)
+		a := rcv._tab.Vector(o)
+		return rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1))
 	}
-	return nil
+	return 0
 }
 
-func (rcv *SUser) Pos(obj *Vec3) *Vec3 {
+func (rcv *SUser) UidLength() int {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
+	if o != 0 {
+		return rcv._tab.VectorLen(o)
+	}
+	return 0
+}
+
+func (rcv *SUser) MutateUid(j int, n int8) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
+	if o != 0 {
+		a := rcv._tab.Vector(o)
+		return rcv._tab.MutateInt8(a+flatbuffers.UOffsetT(j*1), n)
+	}
+	return false
+}
+
+func (rcv *SUser) X() float64 {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
-		x := o + rcv._tab.Pos
-		if obj == nil {
-			obj = new(Vec3)
-		}
-		obj.Init(rcv._tab.Bytes, x)
-		return obj
+		return rcv._tab.GetFloat64(o + rcv._tab.Pos)
 	}
-	return nil
+	return 0.0
+}
+
+func (rcv *SUser) MutateX(n float64) bool {
+	return rcv._tab.MutateFloat64Slot(8, n)
+}
+
+func (rcv *SUser) Y() float64 {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(10))
+	if o != 0 {
+		return rcv._tab.GetFloat64(o + rcv._tab.Pos)
+	}
+	return 0.0
+}
+
+func (rcv *SUser) MutateY(n float64) bool {
+	return rcv._tab.MutateFloat64Slot(10, n)
+}
+
+func (rcv *SUser) Z() float64 {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(12))
+	if o != 0 {
+		return rcv._tab.GetFloat64(o + rcv._tab.Pos)
+	}
+	return 0.0
+}
+
+func (rcv *SUser) MutateZ(n float64) bool {
+	return rcv._tab.MutateFloat64Slot(12, n)
+}
+
+func (rcv *SUser) AngleZ() float64 {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(14))
+	if o != 0 {
+		return rcv._tab.GetFloat64(o + rcv._tab.Pos)
+	}
+	return 0.0
+}
+
+func (rcv *SUser) MutateAngleZ(n float64) bool {
+	return rcv._tab.MutateFloat64Slot(14, n)
 }
 
 func SUserStart(builder *flatbuffers.Builder) {
-	builder.StartObject(3)
+	builder.StartObject(6)
 }
 func SUserAddUidx(builder *flatbuffers.Builder, uidx uint64) {
 	builder.PrependUint64Slot(0, uidx, 0)
@@ -68,8 +121,20 @@ func SUserAddUidx(builder *flatbuffers.Builder, uidx uint64) {
 func SUserAddUid(builder *flatbuffers.Builder, uid flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(uid), 0)
 }
-func SUserAddPos(builder *flatbuffers.Builder, pos flatbuffers.UOffsetT) {
-	builder.PrependStructSlot(2, flatbuffers.UOffsetT(pos), 0)
+func SUserStartUidVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
+	return builder.StartVector(1, numElems, 1)
+}
+func SUserAddX(builder *flatbuffers.Builder, x float64) {
+	builder.PrependFloat64Slot(2, x, 0.0)
+}
+func SUserAddY(builder *flatbuffers.Builder, y float64) {
+	builder.PrependFloat64Slot(3, y, 0.0)
+}
+func SUserAddZ(builder *flatbuffers.Builder, z float64) {
+	builder.PrependFloat64Slot(4, z, 0.0)
+}
+func SUserAddAngleZ(builder *flatbuffers.Builder, angleZ float64) {
+	builder.PrependFloat64Slot(5, angleZ, 0.0)
 }
 func SUserEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	return builder.EndObject()
