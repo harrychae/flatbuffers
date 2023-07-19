@@ -38,30 +38,12 @@ func (rcv *SUser) MutateUidx(n uint64) bool {
 	return rcv._tab.MutateUint64Slot(4, n)
 }
 
-func (rcv *SUser) Uid(j int) int8 {
+func (rcv *SUser) Uid() []byte {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
-		a := rcv._tab.Vector(o)
-		return rcv._tab.GetInt8(a + flatbuffers.UOffsetT(j*1))
+		return rcv._tab.ByteVector(o + rcv._tab.Pos)
 	}
-	return 0
-}
-
-func (rcv *SUser) UidLength() int {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
-	if o != 0 {
-		return rcv._tab.VectorLen(o)
-	}
-	return 0
-}
-
-func (rcv *SUser) MutateUid(j int, n int8) bool {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
-	if o != 0 {
-		a := rcv._tab.Vector(o)
-		return rcv._tab.MutateInt8(a+flatbuffers.UOffsetT(j*1), n)
-	}
-	return false
+	return nil
 }
 
 func (rcv *SUser) X() float64 {
@@ -120,9 +102,6 @@ func SUserAddUidx(builder *flatbuffers.Builder, uidx uint64) {
 }
 func SUserAddUid(builder *flatbuffers.Builder, uid flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(uid), 0)
-}
-func SUserStartUidVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
-	return builder.StartVector(1, numElems, 1)
 }
 func SUserAddX(builder *flatbuffers.Builder, x float64) {
 	builder.PrependFloat64Slot(2, x, 0.0)
